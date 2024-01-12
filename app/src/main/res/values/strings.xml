@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">handinaute</string>
+    <string name="title_activity_boarding">Boarding</string>
+    <string name="title_activity_bording">Bording</string>
+    <string name="title_activity_admin_screen">AdminScreen</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
