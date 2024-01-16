@@ -1,8 +1,5 @@
 package com.example.handinaute
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,8 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.handinaute.custom.AutoResizedText
 import com.example.handinaute.ui.theme.HandinauteThemeSingleColorLite
-import com.example.handinaute.ui.theme.ui.theme.HandinauteTheme
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+/*
 class AdminScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,24 +50,20 @@ class AdminScreen : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting3("Android")
+
                 }
             }
         }
     }
 }
 
+*/
+@Destination
 @Composable
-fun Greeting3(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun Admin (
+    navigator: DestinationsNavigator?
 
-@Preview(showBackground = true, device = "spec:width=1080dp,height=600dp,dpi=240")
-@Composable
-fun GreetingPreview5() {
+){
     HandinauteThemeSingleColorLite {
 
         Image(
@@ -77,7 +71,7 @@ fun GreetingPreview5() {
             painter = painterResource( R.drawable.background_home2),
             contentDescription = "background_admin",
             contentScale =  ContentScale.FillBounds,
-            )
+        )
 
         Column(
             modifier = Modifier
@@ -92,9 +86,9 @@ fun GreetingPreview5() {
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(start = 20.dp, end = 20.dp, top = 40.dp)
-                    ,
+                ,
 
-               // horizontalArrangement = Arrangement.End,
+                // horizontalArrangement = Arrangement.End,
                 //verticalAlignment = Alignment.CenterVertically,
 
             ) {
@@ -104,7 +98,7 @@ fun GreetingPreview5() {
                         .align(Alignment.Center),
 
 
-                ) {
+                    ) {
 
                     Text(
                         text = "Panel administrateur",
@@ -173,11 +167,11 @@ fun GreetingPreview5() {
                         .clip(shape = CircleShape)
                         .background(MaterialTheme.colorScheme.errorContainer)
 
-                        ,
+                    ,
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
 
-                ) {
+                    ) {
 
                     Row (
                         modifier = Modifier.padding(40.dp),
@@ -207,7 +201,7 @@ fun GreetingPreview5() {
 
                             //fontWeight = FontWeight.Bold,
 
-                            )
+                        )
                     }
 
 
@@ -226,7 +220,7 @@ fun GreetingPreview5() {
             ){
 
                 Text(
-                    modifier=Modifier.padding(15.dp),
+                    modifier= Modifier.padding(15.dp),
                     text = "Dissocier la tablette du handinaute",
                     fontWeight= FontWeight.Bold,
                     fontSize = 20.sp,
@@ -238,4 +232,12 @@ fun GreetingPreview5() {
 
         }
     }
+
+}
+
+
+@Preview(showBackground = true, device = "spec:width=1080dp,height=600dp,dpi=240")
+@Composable
+fun GreetingPreview5() {
+
 }

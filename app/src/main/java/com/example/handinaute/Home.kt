@@ -1,7 +1,10 @@
 package com.example.handinaute
 
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,59 +54,35 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.handinaute.destinations.AdminDestination
 import com.example.handinaute.ui.theme.HandinauteThemeSingleColorLite
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
-/*
-class Boarding : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(
-                android.graphics.Color.TRANSPARENT,
-                android.graphics.Color.TRANSPARENT,
-            ),
-            navigationBarStyle = SystemBarStyle.light(
-                android.graphics.Color.TRANSPARENT,
-                android.graphics.Color.TRANSPARENT,
-                ),
-        )
+class HomeClass : ComponentActivity() {
+    val viemModelInit by viewModels <MyDialogViewModel>()
 
-        setContent {
-            HandinauteThemeSingleColorLite {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                   Column(
-                       modifier = Modifier
-                           .fillMaxSize()
-                           .background(Color.Red),
-
-                   ){
-
-                   }
-                }
-            }
-        }
-    }
 }
-*/
 
 
-/*
 
- */
+class DialogViewModel: ViewModel(){
+
+
+}
 
 @Destination
 @Composable
 fun HomeScreen(
-navigator: DestinationsNavigator?,
+    navigator: DestinationsNavigator?,
+    vm: MyDialogViewModel= viewModel(),
+    ){
 
-){
+
+
     HandinauteThemeSingleColorLite {
 
 
@@ -181,7 +160,11 @@ navigator: DestinationsNavigator?,
                         fontWeight = FontWeight.ExtraBold,
                         fontSize =  26.sp,
                         textDecoration = TextDecoration.Underline,
-                    )
+                        modifier = Modifier.clickable {
+                            vm.onShowDialog()
+
+                            }
+                        )
                 }
 
             }
@@ -241,8 +224,31 @@ navigator: DestinationsNavigator?,
                 }
             }
         }
-    }
-}
+
+        if(vm.isDialogOpen){
+            /*
+            Box(
+                modifier= Modifier
+                    .fillMaxSize()
+                    .background(Color.White.copy(alpha = 0.5f))
+                    .clickable {
+                        vm.onDiscardDialog()
+                    },
+                contentAlignment = Alignment.Center,
+
+            ){
+                navigator?.navigate(LoginFormAdminDestination)
+            }
+            */
+          LoginFormAdmin(navigator)
+
+        }
+
+
+
+
+    }//Theme
+}//HomeScreen fun
 
 
 
@@ -256,120 +262,152 @@ fun ImageSliderIndicator(){}
 
 
 
-
+@Destination()
 @Composable
-fun LoginFormAdmin(modifier: Modifier = Modifier) {
-    Card (
+fun LoginFormAdmin(
+    navigator: DestinationsNavigator?,
+    modifier: Modifier = Modifier,
+    vm:MyDialogViewModel= viewModel(),
+
+) {
+
+//___Clickable blur background
+    Box(
+
         modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White.copy(alpha = 0.6f))
+            .clickable {
+                vm.onDiscardDialog()
+            },
 
-            .wrapContentSize()
-            .clip(MaterialTheme.shapes.medium) // Ajouter des coins légèrement arrondis
-            .background(MaterialTheme.colorScheme.tertiaryContainer),
+    ) {
+        //______
 
+        //___Custom DialogBox
 
-        ) {
-
-        Column(
-            // Ajouter un padding intérieur de 20dp au Column
-            modifier= Modifier
-                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                .padding(20.dp)
-            ,
-
-
+            Card(
+                modifier = Modifier.align(Alignment.Center)
+                    .clip(MaterialTheme.shapes.medium)
+                    .padding(20.dp)
+                    .clickable {/*DoNothing*/}
+                    ,
+                //
 
             ) {
-            // Ajouter un espace de 15dp entre les deux EditText
-            Spacer(modifier=Modifier.height(15.dp))
-
-            var filledTextMail by remember {
-                mutableStateOf("")
-            }
-
-            TextField(
 
 
-                value = filledTextMail ,
-                onValueChange ={filledTextMail=it},
-                textStyle = LocalTextStyle.current.copy(),
-                label = {
-                    Text(text = "Email")
-                },
-                placeholder = {
-                    Text(text = "exemple@mail.com")
-                },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Outlined.Mail , contentDescription = "mail_icon" )
-                },
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next ,
-                    capitalization = KeyboardCapitalization.None,
-                    keyboardType = KeyboardType.Email,
+                Column(
+                    // Ajouter un padding intérieur de 20dp au Column
+                    modifier = Modifier
+                        .padding(40.dp),
 
 
-                    ) ,
-                modifier=Modifier
-                    .background(Color.White)
-                ,
-            )
+                    ) {
+                    // Ajouter un espace de 15dp entre les deux EditText
+                    Spacer(modifier = Modifier.height(15.dp))
 
-            Spacer(modifier=Modifier.height(15.dp))
+                    var filledTextMail by remember {
+                        mutableStateOf("")
+                    }
 
-            var filledTextPassword by remember {
-                mutableStateOf("")
-            }
+                    TextField(
 
-            TextField(
 
-                value = filledTextPassword ,
-                onValueChange ={filledTextPassword=it},
-                textStyle = LocalTextStyle.current.copy(),
-                label = {
-                    Text(text = "Password")
-                },
-                placeholder = {
-                    Text(text = "Enter Password")
-                },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Outlined.Lock , contentDescription = "mail_icon" )
-                },
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None,
-                    keyboardType = KeyboardType.Password,
-                ),
-                visualTransformation = PasswordVisualTransformation(),
-            )
+                        value = filledTextMail,
+                        onValueChange = { filledTextMail = it },
+                        textStyle = LocalTextStyle.current.copy(),
+                        label = {
+                            Text(text = "Email")
+                        },
+                        placeholder = {
+                            Text(text = "exemple@mail.com")
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Mail,
+                                contentDescription = "mail_icon"
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                            capitalization = KeyboardCapitalization.None,
+                            keyboardType = KeyboardType.Email,
 
-            Spacer(modifier=Modifier.height(15.dp))
 
-            Button(
-
-                onClick = {
-                    // Action à effectuer lors du clic sur le bouton de connexion
-                },
-                modifier = Modifier
-                    .wrapContentSize()
-                    .height(50.dp)
-                    .clip(MaterialTheme.shapes.medium) // Ajouter des coins arrondis
-                    .align(Alignment.CenterHorizontally),
-            ) {
-                Text(
-                    text="Connexion",
-                    style = LocalTextStyle.current.copy(
-                        fontSize = 20.sp,
-                        //fontWeight = FontWeight.Normal,
-                        //fontStyle = FontStyle.Normal,
+                            ),
+                        modifier = Modifier
+                            .background(Color.White),
                     )
-                )
-            }
 
-        }
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    var filledTextPassword by remember {
+                        mutableStateOf("")
+                    }
+
+                    TextField(
+
+                        value = filledTextPassword,
+                        onValueChange = { filledTextPassword = it },
+                        textStyle = LocalTextStyle.current.copy(),
+                        label = {
+                            Text(text = "Password")
+                        },
+                        placeholder = {
+                            Text(text = "Enter Password")
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Lock,
+                                contentDescription = "mail_icon"
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            capitalization = KeyboardCapitalization.None,
+                            keyboardType = KeyboardType.Password,
+                        ),
+                        visualTransformation = PasswordVisualTransformation(),
+                    )
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Button(
+
+                        onClick = {
+                            // Action à effectuer lors du clic sur le bouton de connexion
+                                 navigator?.navigate(AdminDestination())
+                        },
+
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .height(50.dp)
+                            .clip(MaterialTheme.shapes.medium) // Ajouter des coins arrondis
+                            .align(Alignment.CenterHorizontally),
+                    ) {
+                        Text(
+                            text = "Connexion",
+                            style = LocalTextStyle.current.copy(
+                                fontSize = 20.sp,
+                                //fontWeight = FontWeight.Normal,
+                                //fontStyle = FontStyle.Normal,
+                            )
+                        )
+                    }
+
+                }//ColumnColumnScope
+
+        }//CardColumnScope
+
+    }//BoxScope
+
+
+}//LoginFormEnd
 
 
 
-    }
 
-}
+
 
 
 

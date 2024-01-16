@@ -32,13 +32,6 @@ private val WhiteColorScheme = lightColorScheme(
     primary = BluePrimery,
     secondary = BlueSecondary,
     tertiary = TurquoisTertiary,
-    error = RedError,
-    errorContainer = OrangeHelp,
-    tertiaryContainer = OrangeH,
-    onErrorContainer = androidx.compose.ui.graphics.Color.White,
-    primaryContainer = BlueContainer,
-
-
 )
 /*
 private val LightColorScheme = lightColorScheme(
