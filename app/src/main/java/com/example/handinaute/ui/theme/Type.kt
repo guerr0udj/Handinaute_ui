@@ -13,25 +13,63 @@ val Typography = Typography(
         bodyLarge = TextStyle(
                 fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
                 fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.5.sp
 
-        )
-        /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        ),
+
+        bodyMedium = TextStyle(
+            fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            lineHeight = 24.sp,
+            letterSpacing = 0.5.sp
+
+        ),
+
+        bodySmall = TextStyle(
+            fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 24.sp,
+            letterSpacing = 0.5.sp
+
+        ),
+
+        titleLarge = TextStyle(
+        fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
+        fontWeight = FontWeight.Normal,
+        fontSize = 30.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
+    ),
+
+    titleMedium = TextStyle(
+        fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
+        fontWeight = FontWeight.Normal,
+        fontSize = 26.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
+    ),
+
+    titleSmall = TextStyle(
+        fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
+
+
+
+
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = FontFamily(Font(R.font.bc_alphapipe_l_regular)),
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )
-    */
+
 )

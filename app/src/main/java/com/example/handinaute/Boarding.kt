@@ -1,10 +1,8 @@
 package com.example.handinaute
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +17,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,8 +29,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.handinaute.destinations.OnBoardDestination
 import com.example.handinaute.ui.theme.HandinauteThemeSingleColorLite
 import com.example.handinaute.ui.theme.TurquoisTertiary
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+
+/* 
+//Activity Classe with set content
 
 class Bording : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,24 +48,19 @@ class Bording : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting2("Android")
+                   
                 }
             }
         }
     }
 }
-
+ */
+@Destination 
 @Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true, device = "spec:width=1080dp,height=600dp,dpi=240" )
-@Composable
-fun GreetingPreview4() {
+fun Boarding(
+    navigator: DestinationsNavigator?,
+    
+) {
     HandinauteThemeSingleColorLite {
 
 
@@ -81,7 +79,7 @@ fun GreetingPreview4() {
             painter = painterResource( R.drawable.background_home2),
             contentDescription = "background_admin",
             contentScale =  ContentScale.FillBounds,
-            )
+        )
 
         Column(
             modifier = Modifier
@@ -111,7 +109,7 @@ fun GreetingPreview4() {
                     Text(
                         text = "Tutorial d'embarquement",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 26.sp,
+                        fontSize = 25.sp,
                     )
 
                 }
@@ -140,7 +138,7 @@ fun GreetingPreview4() {
                             modifier = Modifier.padding(15.dp),
                             text = "Annuler",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 26.sp
+                            fontSize = 25.sp
 
                         )
                     }
@@ -157,7 +155,7 @@ fun GreetingPreview4() {
                             modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 15.dp, bottom = 15.dp),
                             text = "Suivant",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 26.sp
+                            fontSize = 25.sp
                         )
                     }
 
@@ -166,6 +164,46 @@ fun GreetingPreview4() {
             }
 
 
+
+        }//Column
+
+        //---------------------------------------------------------------------
+        //TODO Bouton Test a effacer après finalisation du screen
+
+        Box(
+                modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopEnd
+        ){
+        Button(
+            modifier= Modifier.statusBarsPadding(),
+            onClick = {navigator?.navigate(OnBoardDestination())}
+        ) {
+            Text(text = "Boarding Screen")
         }
     }
+        //---------------------------------------------------------
+
+    }//ThemeColor
+}//end Boarding
+
+
+
+//------------------------------------------------
+/*TODO : */
+@Composable
+fun ImageSlider(){}
+@Composable
+fun DotIndicator(){}
+@Composable
+
+fun ImageSliderIndicator(){}
+//-----------------------------------------------------
+
+
+
+
+@Preview(showBackground = true, device = "spec:width=1080dp,height=600dp,dpi=240" )
+@Composable
+fun GreetingPreview4() {
+    Boarding(navigator = null)
 }

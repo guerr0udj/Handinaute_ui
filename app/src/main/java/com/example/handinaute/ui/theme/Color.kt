@@ -26,6 +26,13 @@ val WhiteH = Color(0xFFF1F0F1)
 val WhiteGrayH = Color(0xFFD6D3D6)
 val RedError = Color(0xFFE91E1E)
 
+
+val RedErrorPrime = Color(0xFFFF2121)
+val BluePrime = Color(0xFF3C40FF)
+val TurquoisPrime = Color(0xFF30EB4F)
+
+
+
 // note sur les polices textes
 // police BC ALPHAPIPE, LATO,
 

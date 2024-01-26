@@ -2,6 +2,7 @@ package com.example.handinaute
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.handinaute.custom.AutoResizedText
+import com.example.handinaute.destinations.HomeScreenDestination
+import com.example.handinaute.destinations.LoginHandinauteScreenDestination
 import com.example.handinaute.ui.theme.HandinauteThemeSingleColorLite
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -131,6 +134,9 @@ fun Admin (
                         fontWeight = FontWeight.ExtraBold,
                         fontSize =  26.sp,
                         textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable {
+                            navigator?.navigate(HomeScreenDestination())
+                        }
                     )
                 }
 
@@ -220,7 +226,9 @@ fun Admin (
             ){
 
                 Text(
-                    modifier= Modifier.padding(15.dp),
+                    modifier= Modifier
+                        .padding(15.dp)
+                        .clickable { navigator?.navigate(LoginHandinauteScreenDestination) },
                     text = "Dissocier la tablette du handinaute",
                     fontWeight= FontWeight.Bold,
                     fontSize = 20.sp,
@@ -239,5 +247,6 @@ fun Admin (
 @Preview(showBackground = true, device = "spec:width=1080dp,height=600dp,dpi=240")
 @Composable
 fun GreetingPreview5() {
+    Admin(navigator = null)
 
 }

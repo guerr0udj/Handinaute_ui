@@ -197,7 +197,9 @@ fun LoginFormHandinaute(
 
                 onClick = {
                     navigator?.navigate(
+                        /*TODO : -------------------------*/
                         HomeScreenDestination()
+                       // DialogExamplesDestination
                     )
                 },
                 modifier = Modifier

@@ -46,7 +46,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -56,7 +55,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.handinaute.custom.AutoResizedText
 import com.example.handinaute.destinations.AdminDestination
+import com.example.handinaute.destinations.BoardingDestination
+import com.example.handinaute.destinations.LoginFormAdminDestination
 import com.example.handinaute.ui.theme.HandinauteThemeSingleColorLite
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -80,8 +82,6 @@ fun HomeScreen(
     navigator: DestinationsNavigator?,
     vm: MyDialogViewModel= viewModel(),
     ){
-
-
 
     HandinauteThemeSingleColorLite {
 
@@ -114,7 +114,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp, top = 10.dp),
 
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
@@ -131,7 +131,7 @@ fun HomeScreen(
                     Text(
                         text = "IconeClient",
                         fontWeight = FontWeight.Bold,
-                        fontSize =  26.sp,
+                        fontSize =  25.sp,
                     )
                 }
 
@@ -158,10 +158,10 @@ fun HomeScreen(
                     Text(
                         text = "Administration" ,
                         fontWeight = FontWeight.ExtraBold,
-                        fontSize =  26.sp,
+                        fontSize =  25.sp,
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable {
-                            vm.onShowDialog()
+                            navigator?.navigate(LoginFormAdminDestination)
 
                             }
                         )
@@ -182,20 +182,22 @@ fun HomeScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .padding(20.dp),
+                        .padding(5.dp).weight(1f),
                     horizontalArrangement = Arrangement.Center
 
                 ) {
                     Text(
-                        text = "Bienvenu a bord Du Handinaute",
-                        fontWeight = FontWeight.Bold,
-                        fontSize =  26.sp,
+                        text = "Bienvenue a bord Du Handinaute",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize =  25.sp,
                     )
 
                 }
 
                 Image(
-                    modifier = Modifier.padding(bottom = 30.dp),
+                    modifier = Modifier
+                        .padding(bottom = 5.dp)
+                        .weight(3f),
                     painter = painterResource(id = image[currentIndex.value]),
                     contentDescription = "Tuto d'embarquement"
                 )
@@ -205,20 +207,32 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .padding(bottom = 20.dp)
+                        .weight(1f)
                     ,
                     contentAlignment = Alignment.Center,
                 ){
 
 
                     Button(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .height(60.dp),
                         shape= MaterialTheme.shapes.small,
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            navigator?.navigate(BoardingDestination)
+                        }
                     ) {
-                        Text(
-                            modifier=Modifier.padding(15.dp),
+                        AutoResizedText(
+                            modifier=Modifier.weight(1f),
                             text = "Commencer l'embarquement",
-                            fontWeight= FontWeight.Bold,
-                            fontSize = 26.sp
+                            maxLine = 2,
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight= FontWeight.ExtraBold,
+                                //fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            ),
+
+                            //
+                            //
                         )
                     }
                 }
@@ -226,25 +240,10 @@ fun HomeScreen(
         }
 
         if(vm.isDialogOpen){
-            /*
-            Box(
-                modifier= Modifier
-                    .fillMaxSize()
-                    .background(Color.White.copy(alpha = 0.5f))
-                    .clickable {
-                        vm.onDiscardDialog()
-                    },
-                contentAlignment = Alignment.Center,
 
-            ){
-                navigator?.navigate(LoginFormAdminDestination)
-            }
-            */
-          LoginFormAdmin(navigator)
-
+          //LoginFormAdmin(navigator)
+            navigator?.navigate(LoginFormAdminDestination)
         }
-
-
 
 
     }//Theme
@@ -252,17 +251,9 @@ fun HomeScreen(
 
 
 
-@Composable
-fun ImageSlider(){}
-@Composable
-fun DotIndicator(){}
-@Composable
 
-fun ImageSliderIndicator(){}
-
-
-
-@Destination()
+//___ Custom Dialog Box Connection Admin
+@Destination(style= MyDialogStyle::class)
 @Composable
 fun LoginFormAdmin(
     navigator: DestinationsNavigator?,
@@ -271,7 +262,118 @@ fun LoginFormAdmin(
 
 ) {
 
-//___Clickable blur background
+    Card(
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .padding(10.dp)
+        ,
+        //
+
+    ) {
+
+        Column(
+            // Ajouter un padding intérieur de 20dp au Column
+            modifier = Modifier
+                .padding(40.dp),
+
+
+            ) {
+            // Ajouter un espace de 15dp entre les deux EditText
+            Spacer(modifier = Modifier.height(15.dp))
+
+            var filledTextMail by remember {
+                mutableStateOf("")
+            }
+
+            TextField(
+                value = filledTextMail,
+                onValueChange = { filledTextMail =it},
+                textStyle = LocalTextStyle.current.copy(),
+                label = {
+                    Text(text = "Email")
+                },
+                placeholder = {
+                    Text(text = "exemple@mail.com")
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Mail,
+                        contentDescription = "mail_icon"
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = androidx.compose.ui.text.input.ImeAction.Next,
+                    capitalization = KeyboardCapitalization.None,
+                    keyboardType = KeyboardType.Email,
+
+
+                    ),
+                modifier = Modifier
+                    .background(Color.White),
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            var filledTextPassword by remember {
+                mutableStateOf("")
+            }
+
+            TextField(
+
+                value = filledTextPassword,
+                onValueChange = { filledTextPassword = it },
+                textStyle = LocalTextStyle.current.copy(),
+                label = {
+                    Text(text = "Password")
+                },
+                placeholder = {
+                    Text(text = "Enter Password")
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Lock,
+                        contentDescription = "mail_icon"
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    keyboardType = KeyboardType.Password,
+                ),
+                visualTransformation = PasswordVisualTransformation(),
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Button(
+
+                onClick = {
+                    // Action à effectuer lors du clic sur le bouton de connexion
+                    navigator?.navigate(AdminDestination())
+                },
+
+                modifier = Modifier
+                    .wrapContentSize()
+                    .height(50.dp)
+                    .clip(MaterialTheme.shapes.medium) // Ajouter des coins arrondis
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = "Connexion",
+                    style = LocalTextStyle.current.copy(
+                        fontSize = 20.sp,
+                        //fontWeight = FontWeight.Normal,
+                        //fontStyle = FontStyle.Normal,
+                    )
+                )
+            }
+
+        }//ColumnColumnScope
+
+    }//CardColumnScope
+
+
+    /*
+
     Box(
 
         modifier = Modifier
@@ -400,6 +502,8 @@ fun LoginFormAdmin(
         }//CardColumnScope
 
     }//BoxScope
+
+     */
 
 
 }//LoginFormEnd

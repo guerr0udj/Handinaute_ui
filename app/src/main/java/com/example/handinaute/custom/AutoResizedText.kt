@@ -15,7 +15,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isUnspecified
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun AutoResizedText(
@@ -52,9 +51,9 @@ fun AutoResizedText(
         onTextLayout = {result ->
 
 
-            if(result.lineCount>maxLine){
+            if(result.lineCount>maxLine  ){
                 if(style.fontSize.isUnspecified){
-                    resizedTextSize= 16.sp
+                    resizedTextSize= defaultFontSize
                 }
                 resizedTextSize *= 0.95
 
